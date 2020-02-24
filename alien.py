@@ -9,6 +9,9 @@ class Alien(Sprite):
         super(Alien,self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
+        self.alien_speed_factor = 1.0
+        self.fleet_drop_speed = 10.0
+        self.fleet_direction = 1
 
         # 加载外星人图像，并设置rect属性
         self.image = pygame.image.load('images/alien.bmp')
@@ -24,4 +27,20 @@ class Alien(Sprite):
     def blitme(self):
         """在指定位置绘制外星人"""
         self.screen.blit(self.image,self.rect)
+
+    def check_edges(self):
+        """单个外星人与屏幕边缘的碰撞检测"""
+        screen_rect = self.screen.get_rect()
+        if self.rect.right > screen_rect.right:
+            return True
+        elif self.rect.left <= 0:
+            return True
+    
+    def update(self):
+        """根据当前的速度更新位置"""
+        self.x += (self.alien_speed_factor * self.fleet_direction)
+        self.rect.x = self.x
+        
+
+            
         
