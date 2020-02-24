@@ -4,18 +4,33 @@ from alien import Alien
 from ship import Ship
 
 
-def check_events():
+def check_events(ship):
     """响应按键和鼠标事件"""
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        # 按住按键
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                ship.moving_right = True
+            elif event.key == pygame.K_LEFT:
+                ship.moving_left = True
+        # 松开按键
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                ship.moving_right = False
+            elif event.key == pygame.K_LEFT:
+                ship.moving_left = False
+        
+
 
 def update_screen(ai_settings,screen,ship,aliens,bullets):
     """更新屏幕上的图像，并切换到新屏幕"""
 
     screen.fill(ai_settings.bg_color)
     aliens.draw(screen)
+    ship.blitme()
     pygame.display.flip()
 
 def get_number_aliens_x(ai_settings, alien_width):
@@ -42,7 +57,7 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
 def create_fleet(ai_settings, screen, ship, aliens):
     """创建外星人群"""
     alien = Alien(ai_settings,screen)
-    ship = Ship(screen)
+    ship = Ship(ai_settings,screen)
     number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)     
     number_rows = get_number_rows(ai_settings,400,alien.rect.height)    
     # 创建外星人群
