@@ -10,7 +10,7 @@ class Alien(Sprite):
         self.screen = screen
         self.ai_settings = ai_settings
         self.alien_speed_factor = 1.0
-        self.fleet_drop_speed = 10.0
+        self.fleet_drop_speed = 20.0
         self.fleet_direction = 1
 
         # 加载外星人图像，并设置rect属性
