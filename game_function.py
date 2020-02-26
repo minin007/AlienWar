@@ -4,13 +4,13 @@ from alien import Alien
 from ship import Ship
 from time import sleep
 from bullet import Bullet
-from threading import Timer
+
 
 
 
 def check_events(ai_settings, screen, ship, bullets):
     """响应按键和鼠标事件"""
-    t = RepeatingTimer(0.5, add_bullet, (ai_settings, screen, ship, bullets,))
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -21,7 +21,7 @@ def check_events(ai_settings, screen, ship, bullets):
             elif event.key == pygame.K_LEFT:
                 ship.moving_left = True
             elif event.key == pygame.K_SPACE:
-                # new_bullet = Bullet(ai_settings, screen, ship)
+                add_bullet(ai_settings, screen, ship, bullets)
                 
                  
 
@@ -33,7 +33,7 @@ def check_events(ai_settings, screen, ship, bullets):
                 ship.moving_right = False
             elif event.key == pygame.K_LEFT:
                 ship.moving_left = False
-            elif event.key == pygame.K_SPACE
+            
                 
                 
 
