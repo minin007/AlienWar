@@ -31,7 +31,8 @@ def run_game():
             ship.update()
             # 更新子弹位置
             bullets.update()
-            # 更新整个屏幕 Todo:添加飞船和子弹的更新
+        
+        # 更新整个屏幕 Todo:添加飞船和子弹的更新
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 
