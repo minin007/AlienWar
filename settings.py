@@ -12,6 +12,9 @@ class Settings():
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = 60,60,60
+        #射击标志
+        self.bullet_flag = False
+        self.last_flag = False
 
         # 飞船设置
         self.ship_speed_factor = 1.5

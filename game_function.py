@@ -5,13 +5,15 @@ from ship import Ship
 from time import sleep
 from bullet import Bullet
 from threading import Timer
+from pygame.sprite import Group
+from settings import Settings
 
-
-
-def check_events(ai_settings, screen, ship, bullets):
+def check_events(ai_settings, screen, ship, bullet):
     """响应按键和鼠标事件"""
-    t = RepeatingTimer(0.5, add_bullet, (ai_settings, screen, ship, bullets,))
-    for event in pygame.event.get():
+    ai_settings.last_flag = ai_settings.bullet_flag
+    
+    for event in pygame.event.get():        
+    
         if event.type == pygame.QUIT:
             sys.exit()
         # 按住按键
@@ -21,10 +23,7 @@ def check_events(ai_settings, screen, ship, bullets):
             elif event.key == pygame.K_LEFT:
                 ship.moving_left = True
             elif event.key == pygame.K_SPACE:
-                # new_bullet = Bullet(ai_settings, screen, ship)
-                
-                 
-
+                ai_settings.bullet_flag = True
                 
                
         # 松开按键
@@ -33,18 +32,24 @@ def check_events(ai_settings, screen, ship, bullets):
                 ship.moving_right = False
             elif event.key == pygame.K_LEFT:
                 ship.moving_left = False
-            elif event.key == pygame.K_SPACE
-                
-                
+            elif event.key == pygame.K_SPACE:
+                ai_settings.bullet_flag = False       
 
+def update_bullets(ai_settings, screen, ship, bullets, bullet):
+    """更新子弹"""
+    if ai_settings.bullet_flag == True and ai_settings.last_flag == False:
+        add_bullet(ai_settings, screen, ship, bullets, bullet)
+    bullets.update()
 
-
-            
-
-def add_bullet(ai_settings, screen, ship, bullets):
+def add_bullet(ai_settings, screen, ship, bullets, bullet):        
+    t = Timer(0.1, add_bullet,(ai_settings, screen, ship, bullets, bullet,))
+    # 添加新的子弹
     new_bullet = Bullet(ai_settings, screen, ship)
     bullets.add(new_bullet)
-
+        
+    t.start()
+    if ai_settings.bullet_flag == False:
+        t.cancel()
 
 def update_screen(ai_settings,screen,ship,aliens,bullets):
     """更新屏幕上的图像，并切换到新屏幕"""
